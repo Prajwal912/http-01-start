@@ -19,7 +19,18 @@ export class AppComponent implements OnInit {
      })
    }
 
-  ngOnInit() {}
+   onFetchPosts(){
+    this.fetchPosts()
+   }
+
+  ngOnInit() {
+    this.fetchPosts()
+  }
 
 
+  private fetchPosts(){
+    this.http.get("https://http-client-backend-default-rtdb.firebaseio.com/posts.json").subscribe(res => {
+      console.log(res)
+    })
+  }
 }
