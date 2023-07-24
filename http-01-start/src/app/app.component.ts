@@ -10,6 +10,7 @@ import { Post } from './post.mode';
 })
 export class AppComponent implements OnInit {
   loadedPost:Post[] = []
+  isLoading:boolean = false
 
   constructor(private http: HttpClient) { }
 
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
 
 
   private fetchPosts() {
+    !this.isLoading
     this.http
       .get<{[item:string]: Post}>("https://http-client-backend-default-rtdb.firebaseio.com/posts.json")
       .pipe(
@@ -44,6 +46,7 @@ export class AppComponent implements OnInit {
              return postData
         }))
       .subscribe(res => {
+        this.isLoading
        this.loadedPost = res
       });
   }
