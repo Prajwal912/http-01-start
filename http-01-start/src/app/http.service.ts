@@ -26,11 +26,11 @@ export class HttpService {
   }
 
   fetchPosts() {
-    // set multiple query params -- not worked with firebase
-    //using append we can add multiple params
+    // set multiple query params -- using append we can add multiple params
     let searchParams = new HttpParams();
     searchParams = searchParams.append('print1', 'hello')
     searchParams = searchParams.append('print2', 'hey')
+    searchParams = searchParams.append('print', 'pretty')
 
     return this.http
       .get<{ [item: string]: Post }>("https://http-client-backend-default-rtdb.firebaseio.com/posts.json",
