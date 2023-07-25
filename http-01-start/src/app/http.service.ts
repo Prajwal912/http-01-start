@@ -20,7 +20,7 @@ export class HttpService {
   }
 
   fetchPosts(){
-    this.http
+   return  this.http
     .get<{[item:string]: Post}>("https://http-client-backend-default-rtdb.firebaseio.com/posts.json")
     .pipe(
       map((res) => {
@@ -32,9 +32,10 @@ export class HttpService {
         }
            return postData
       }))
-    .subscribe(res => {
+    }
 
-    });
 
-  }
+    deletePost(){
+    return  this.http.delete("https://http-client-backend-default-rtdb.firebaseio.com/posts.json")
+    }
 }

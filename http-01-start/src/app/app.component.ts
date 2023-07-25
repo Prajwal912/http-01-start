@@ -20,11 +20,25 @@ export class AppComponent implements OnInit {
   }
 
   onFetchPosts() {
-    this.commonPost.fetchPosts()
+    !this.isLoading
+    this.commonPost.fetchPosts().subscribe((res) => {
+    this.isLoading
+    this.loadedPost = res
+    })
+  }
+
+  onClearPosts(){
+    this.commonPost.deletePost().subscribe(() => {
+    this.loadedPost = []
+    })
   }
 
   ngOnInit() {
-    this.commonPost.fetchPosts()
+    !this.isLoading
+    this.commonPost.fetchPosts().subscribe((res) => {
+    this.isLoading
+    this.loadedPost = res
+    })
   }
 
 

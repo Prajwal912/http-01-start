@@ -40,24 +40,24 @@
         Fetch Posts
       </button>
       |
-      <!-- <button
+      <button
         class="btn btn-danger"
         [disabled]="loadedPost.length < 1"
         (click)="onClearPosts()"
       >
         Clear Posts
-      </button> -->
+      </button>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12 col-md-6 col-md-offset-3">
-      <p *ngIf="loadedPost.length < 1  && !isLoading">No posts available!</p>
-        <ul class="list-group" *ngIf="loadedPost.length >= 1  && !isLoading">
+      <p *ngIf="loadedPost.length < 1">No posts available!</p>
+        <ul class="list-group" *ngIf="loadedPost.length >= 1">
 
           <li class="list-group-item" *ngFor="let post of loadedPost">
 
-            <h3>{{post.title}}</h3>
-            <p>{{post.content}}</p>
+            <h3>{{post.tit}}</h3>
+            <p>{{post.cont}}</p>
 
           </li>
 
