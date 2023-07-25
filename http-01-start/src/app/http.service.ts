@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Post } from './post.mode';
 import { Subject } from 'rxjs';
@@ -27,7 +27,14 @@ export class HttpService {
 
   fetchPosts(){
    return  this.http
-    .get<{[item:string]: Post}>("https://http-client-backend-default-rtdb.firebaseio.com/posts.json")
+    .get<{[item:string]: Post}>("https://http-client-backend-default-rtdb.firebaseio.com/posts.json",
+    {
+      headers: new HttpHeaders(
+        {
+          'Auth': 'nothing to say',
+          'api-res': 'https://http-client-backend-default-rtdb.firebaseio.com/',
+        })
+    })
     .pipe(
       map((res) => {
         let postData:Post[] = [];
