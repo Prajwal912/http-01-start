@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isLoading
       this.loadedPost = res
     }, error => {
+      this.isLoading = false;
       this.error = error.message
     })
   }
@@ -58,6 +59,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.errorSub.unsubscribe()
   }
 
+
+  handleError(){
+    this.error = null
+  }
 
 
 
