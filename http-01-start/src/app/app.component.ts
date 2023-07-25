@@ -12,6 +12,7 @@ import { HttpService } from './http.service';
 export class AppComponent implements OnInit {
   loadedPost:Post[] = []
   isLoading:boolean = false
+  error = null;
 
   constructor(private http: HttpClient, private commonPost:HttpService) { }
 
@@ -24,6 +25,8 @@ export class AppComponent implements OnInit {
     this.commonPost.fetchPosts().subscribe((res) => {
     this.isLoading
     this.loadedPost = res
+    }, error => {
+     this.error = error.message
     })
   }
 
@@ -38,7 +41,9 @@ export class AppComponent implements OnInit {
     this.commonPost.fetchPosts().subscribe((res) => {
     this.isLoading
     this.loadedPost = res
-    })
+    }, error => {
+      this.error = error.statusText
+     })
   }
 
 
