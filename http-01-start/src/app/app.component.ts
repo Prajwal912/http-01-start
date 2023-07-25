@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Post } from './post.mode';
+import { HttpService } from './http.service';
 
 @Component({
   selector: 'app-root',
@@ -12,43 +13,21 @@ export class AppComponent implements OnInit {
   loadedPost:Post[] = []
   isLoading:boolean = false
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private commonPost:HttpService) { }
 
   onCreatePost(postData: { title: string, content: string }) {
-    this.http.post<{name:string}>('https://http-client-backend-default-rtdb.firebaseio.com/posts.json',
-      postData
-    ).subscribe(res => {
-      console.log(res)
-    })
+    this.commonPost.createAndStorePost(postData.title, postData.content)
   }
 
   onFetchPosts() {
-    this.fetchPosts()
+    this.commonPost.fetchPosts()
   }
 
   ngOnInit() {
-    this.fetchPosts()
+    this.commonPost.fetchPosts()
   }
 
 
-  private fetchPosts() {
-    !this.isLoading
-    this.http
-      .get<{[item:string]: Post}>("https://http-client-backend-default-rtdb.firebaseio.com/posts.json")
-      .pipe(
-        map((res) => {
-          let postData:Post[] = [];
-          for (let item in res){
-            if(res.hasOwnProperty(item)){
-              postData.push({...res[item], id:item})
-            }
-          }
-             return postData
-        }))
-      .subscribe(res => {
-        this.isLoading
-       this.loadedPost = res
-      });
-  }
+
 
 }
