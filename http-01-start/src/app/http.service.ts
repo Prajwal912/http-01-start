@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Post } from './post.mode';
 import { Subject } from 'rxjs';
 @Injectable({
@@ -16,7 +16,12 @@ export class HttpService {
   createAndStorePost(title: string, content: string) {
     let postData = { tit: title, cont: content };
     this.http.post<{ name: string }>('https://http-client-backend-default-rtdb.firebaseio.com/posts.json',
-      postData
+      postData,
+      {
+        //observe will give the whole HttpResponse observe
+        observe:'response'
+        // observe:'body'
+      }
     ).subscribe(res => {
       console.log(res)
     },
@@ -59,6 +64,13 @@ export class HttpService {
 
 
   deletePost() {
-    return this.http.delete("https://http-client-backend-default-rtdb.firebaseio.com/posts.json")
+    return this.http.delete("https://http-client-backend-default-rtdb.firebaseio.com/posts.json", {
+      observe:'events'
+    }).pipe(
+      tap(eve => {
+        console.log(eve)
+      })
+    )
+
   }
 }
